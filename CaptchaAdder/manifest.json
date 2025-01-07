@@ -1,0 +1,38 @@
+{
+    "name": "CaptchaAdder",
+    "version": "1.0",
+    "manifest_version": 3,
+    "icons": {
+        "128": "/images/captcha-icon.png"
+    },
+    "action": {
+        "default_popup": "/popup.html",
+        "default_icon": "/images/captcha-icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.youtube.com/*",
+                "*://localhost/*"
+            ],
+            "css": [],
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "host_permissions": [
+        "https://www.google.com/*"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}
