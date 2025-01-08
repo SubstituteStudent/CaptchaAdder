@@ -3,12 +3,14 @@
 
 // adds a listener to tab change
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-
+    
+    
     // check for a URL in the changeInfo parameter (url is only added when it is changed)
-    if (changeInfo.url) {
+    if (changeInfo.url && changeInfo.url.substring(24, 29) === "watch") {
         send({
             changedTabs:true
         });
+        
     }
 });
 

@@ -2,25 +2,7 @@ console.log("content script loaded");
 var captchaSolved = false;
 var completeCaptchaText;
 var playerElement;
-
-
-window.onload = () => {
-    // Wait half a second for the page to load, or the necessary html elements won't be there for some reason
-    setTimeout(function() {
-        const playButton = document.getElementById("movie_player") || document.body;
-        playerElement = document.getElementById("ytd-player");
-
-        // Set up the text prompting the user to do the captcha
-        completeCaptchaText = document.createElement("p");
-        completeCaptchaText.textContent = "Complete the captcha in the extention to watch this video! :)";
-        completeCaptchaText.style.color = 'white';
-        completeCaptchaText.style.fontSize = "25px";;
-        playerElement.parentNode.appendChild(completeCaptchaText);
-
-        // Begin observing for changes on the page
-        observePlayButton(playButton);
-      }, 500);
-};
+var alreadyCreatedElements = false;
 
 function observePlayButton(playButton)
 {
@@ -87,4 +69,23 @@ function changeTabs()
 {
     console.log("changed tabs");
     captchaSolved = false;
+
+    if(!alreadyCreatedElements)
+    {
+        setTimeout(function() {
+            const playButton = document.getElementById("movie_player") || document.body;
+            playerElement = document.getElementById("ytd-player");
+
+            // Set up the text prompting the user to do the captcha
+            completeCaptchaText = document.createElement("p");
+            completeCaptchaText.textContent = "Complete the captcha in the extention to watch this video! :)";
+            completeCaptchaText.style.color = 'white';
+            completeCaptchaText.style.fontSize = "25px";;
+            playerElement.parentNode.appendChild(completeCaptchaText);
+
+            // Begin observing for changes on the page
+            observePlayButton(playButton);
+        }, 500);
+        alreadyCreatedElements = true;
+    }
 }
